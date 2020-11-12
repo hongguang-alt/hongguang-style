@@ -1,0 +1,50 @@
+.alert {
+    position: relative;
+    padding: $alert-padding-y $alert-padding-x;
+    margin-bottom: 1rem;
+    border: $alert-border-width solid transparent;
+    border-radius: $alert-border-radius;
+    background-image: none;
+    font-weight: $alert-font-weight;
+    line-height: $alert-line-height;
+    color: $white;
+    white-space: nowrap;
+}
+
+//基础色，定义过的$primary
+.alert-default {
+    @include alert-style($primary,$primary)
+}
+
+.alert-danger {
+    @include alert-style($danger,$danger)
+}
+
+.alert-success{
+    @include alert-style($success,$success)
+}
+
+.alert-warning{
+    @include alert-style($warning,$warning)
+}
+
+//存在描述
+.alert-hasDes{
+    font-weight: 700;
+}
+
+//关闭按钮
+.alert-close{
+    font-weight: 700;
+    cursor: pointer;
+    text-align: right;
+}
+
+.alert-flex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert-none{
+    display: none;
+}
