@@ -24,8 +24,13 @@ interface MenuContextInter {
 
 export const  MenuContext =  React.createContext<MenuContextInter>({index:'0'})
 
-
-const Menu:React.FC<MenuProps> = (props) =>{
+/**
+   #### Menu菜单使用方式
+    ~~~ js
+    import { Menu,MenuItem,SubMenu } from 'hongguang-style'
+    ~~~
+*/
+export const Menu:React.FC<MenuProps> = (props) =>{
     const { className ,mode ,children,style,defaultIndex,onSelect,defaultOpenSub} = props
     const [ItemIndex,setItemIndex] = useState(defaultIndex)
 
@@ -77,5 +82,3 @@ Menu.defaultProps = {
     defaultOpenSub:[]
 }
 
-
-export default Menu

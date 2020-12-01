@@ -7,6 +7,9 @@
 //一些函数
 @import 'mixin';
 
+//动画
+@import 'animation';
+
 //button
 @import '../components/Button/style';
 
@@ -17,4 +20,7 @@
 @import '../components/Menu/style';
 
 //tabs
-@import '../components/Tabs/style'
+@import '../components/Tabs/style';
+
+//icon
+@import '../components/Icon/style'

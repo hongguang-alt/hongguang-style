@@ -9,7 +9,7 @@ export interface  TabItemProps{
 }
 
 //每一次都渲染
-const TabItem:React.FC<TabItemProps> = (props) =>{
+export const TabItem:React.FC<TabItemProps> = (props) =>{
     const { label,disabled,children ,index} = props
     const myProps = useContext(TabsContext)
     const classes = classNames('tabs-item',classNames,{
@@ -21,6 +21,7 @@ const TabItem:React.FC<TabItemProps> = (props) =>{
         if(myProps.firstChild && index === myProps.index && !disabled){
             myProps.firstChild(children)
         }
+    // eslint-disable-next-line
     },[])
 
     const handleClick = ()=>{
@@ -38,4 +39,3 @@ const TabItem:React.FC<TabItemProps> = (props) =>{
 }
 
 TabItem.displayName = 'TabItem'
-export default TabItem

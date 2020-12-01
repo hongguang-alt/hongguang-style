@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react'
 import classNames from 'classnames'
 import  {  MenuItemProps } from './menuItem'
 import { MenuContext } from './menu'
-
-
+import {Icon} from '../Icon/icon'
+// import { CSSTransition } from 'react-transition-group'
+import Transition from '../Transition/transition'
 export interface SubMenuProps {
     index?:string,
     title?:string,
@@ -11,7 +12,7 @@ export interface SubMenuProps {
 }
 
 
-const SubMenu:React.FC<SubMenuProps> = (props)=>{
+export const SubMenu:React.FC<SubMenuProps> = (props)=>{
     const { index,title,className ,children} = props
     //使用conetxt获取数据
     const context = useContext(MenuContext)
@@ -23,7 +24,8 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
 
 
     const classes = classNames('menu-item submenu-item',className,{
-        'it-active':context.index === index
+        'it-active':context.index === index,
+        'submenu-opened':open
     })
 
     const handleClick = ()=>{
@@ -64,21 +66,30 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
                 console.error('Warning:SubMenu has child which is not MenuItem')
             }
         })
-
-        return (
-            <ul className={disClasses} >
-                {contentElement}
-            </ul>
+        
+        return (      
+            <Transition 
+                timeout={300} 
+                in={open}  
+                classNames={'submenu-node'}
+                // animation='zoom-in-right'
+            >     
+                <ul className={disClasses} >
+                    {contentElement}
+                </ul>               
+            </Transition>
         )
     }
-
+    
     return (
         <li className={classes} key={index} {...mouseEvent}>
-            <div className='submenu-title' {...clickEvent}>{title}</div>
+            <div className='submenu-title' {...clickEvent}>
+                <div className='submenu-title-left'>{title}</div>
+                <Icon icon='angle-down'></Icon>
+            </div>
             {readlyChildren()}
         </li>
     )
 }
 SubMenu.displayName = 'SubMenu'
 
-export default SubMenu

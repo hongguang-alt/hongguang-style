@@ -9,7 +9,7 @@ interface BaseAlertProps {
     description?:string;
     alType?:AlertType;
     closable?:boolean;
-    onClose?:()=>void
+    onClose?:()=>void;
 }
 type requireProps = {
     title:string
@@ -18,8 +18,13 @@ type requireProps = {
 type DivAlert = BaseAlertProps & React.BaseHTMLAttributes<HTMLElement>
 export type AlertProps = Partial<DivAlert> & requireProps
 
-
-const Alert:React.FC<AlertProps> =(props)=>{
+/**
+   #### Alert消息提醒使用方式
+    ~~~ js
+    import { Alert } from 'hongguang-style'
+    ~~~
+*/
+export const Alert:React.FC<AlertProps> =(props)=>{
     const { 
         description,
         className,
@@ -52,5 +57,3 @@ Alert.defaultProps = {
     closable:true,
     alType:'default'
 }
-
-export default Alert

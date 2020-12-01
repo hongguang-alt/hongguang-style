@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import classNames from 'classnames'
-import {TabItemProps } from './tabItem'
+import { TabItemProps } from './tabItem'
 type TabsMode = 'line' | 'card'
 type SelectFn = (selectedIndex:number)=>void
 
@@ -20,8 +20,13 @@ export interface TabsContextPropsInter {
 
 
 export const TabsContext = React.createContext<TabsContextPropsInter>({index:0})
-
-const Tabs:React.FC<TabsProps> = (props)=>{
+/**
+   #### Tabs 选项卡使用方式
+    ~~~ js
+    import { Tabs,TabsItem } from 'hongguang-style'
+    ~~~
+*/
+export const Tabs:React.FC<TabsProps> = (props)=>{
     const { className,type ,children,defaultIndex,onSelect} = props
 
     const [count,setCount] = useState(defaultIndex)
@@ -79,4 +84,3 @@ Tabs.defaultProps ={
     type:"line"
 }
 
-export default Tabs

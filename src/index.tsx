@@ -4,6 +4,10 @@ import './index.css';
 import './styles/index.scss'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons';
+library.add(fab,fas)
 
 ReactDOM.render(
   <React.StrictMode>

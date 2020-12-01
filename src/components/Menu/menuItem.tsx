@@ -9,7 +9,7 @@ export interface MenuItemProps {
     style?:React.CSSProperties
 }
 
-const MenuItem:React.FC<MenuItemProps> = (props)=>{
+export const MenuItem:React.FC<MenuItemProps> = (props)=>{
     const { children,className ,style,disabled,index} = props
     //获取传递过来的函数和index
     const myProps = useContext(MenuContext)
@@ -36,4 +36,3 @@ MenuItem.defaultProps = {
 }
 
 MenuItem.displayName = "MenuItem"
-export default MenuItem
