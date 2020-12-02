@@ -7,11 +7,11 @@ import {SubMenu} from './components/Menu/subMenu';
 import {Tabs} from './components/Tabs/tabs'
 import {TabItem} from './components/Tabs/tabItem'
 import {Icon} from './components/Icon/icon'
-
+import { Input } from './components/Input/input'
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{padding:'20px'}}>
       <p>图标 Icon</p>
       <Icon
         icon="check"
@@ -100,6 +100,12 @@ function App() {
         <TabItem label={'card3'} >this is content disabled</TabItem>
         <TabItem label='disabled' disabled >this is content disabled</TabItem>
       </Tabs>
+      <p>输入框 input</p> 
+      <Input icon='check'/>
+      <Input size='lg' icon='check'/>
+      <Input size='sm' icon='check' prepand='www.'/>
+      <Input size='sm' append='https://' icon='check'/>
+      <Input size='sm' icon='check' defaultValue='213'/>
     </div>
   );
 }

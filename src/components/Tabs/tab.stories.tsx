@@ -18,7 +18,9 @@ export default {
   </Tabs>;
 
   export const Card = Template.bind({});
-  Card.args = {};
+  Card.args = {
+      type:'card'
+  };
 
   export const Line = Template.bind({});
   Line.args = {
