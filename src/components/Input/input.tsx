@@ -16,7 +16,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLElement>,
     /** 右侧设置按钮*/
     icon?:IconProp
     /** 改变内容的回调函数*/
-    onChange?:(e:ChangeEvent<HTMLElement>)=>void,
+    onChange?:(e:ChangeEvent<HTMLInputElement>)=>void,
 }
 
 /**
@@ -31,12 +31,22 @@ export const Input:React.FC<InputProps> = (props) => {
         [`input-${size}`]:size,
         [`add-padding`]:icon ? true : false
     })
+    const fixControlledValue = (value: any) => {
+        if (typeof value === 'undefined' || value === null) {
+          return ''
+        }
+        return value
+      }
+      if('value' in props) {
+        delete restProps.defaultValue
+        restProps.value = fixControlledValue(props.value)
+      }
     return (
         <div className='input-content'>
             {prepand ? <div className='input-pre-app'>{prepand}</div> :null}
             <span className='input-inner'>
                 {icon ? <Icon className='input-icon' icon={icon}/> : null}
-                <input className={classes} disabled={disabled} {...restProps} onChange={ onChange}/>
+                <input className={classes} disabled={disabled} {...restProps} onChange={onChange}/>
             </span>
             {append ? <div className='input-pre-app'>{append}</div> :null}
         </div>
