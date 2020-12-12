@@ -8,50 +8,9 @@ import {Tabs} from './components/Tabs/tabs'
 import {TabItem} from './components/Tabs/tabItem'
 import {Icon} from './components/Icon/icon'
 import { Input } from './components/Input/input'
-import { AutoComplete ,RenderDataSource} from './components/AutoComplete/autoComplete'
+import { AutoComplete } from './components/AutoComplete/autoComplete'
 
 function App() {
-  const AutoCompleteData = ['1','2','3','4','9','10','11','23']
-  type autoObj = {
-    value:string
-    name?:string,
-  }
-  const AutoCompleteDataObj = [
-    {
-    value:'1',
-    name:'红光'
-  },
-  {
-    value:'2',
-    name:'红光2'
-  },
-  {
-    value:'4',
-    name:'红光4'
-  },
-  {
-    value:'9',
-    name:'红光9'
-  },
-  {
-    value:'10',
-    name:'红光10'
-  },
-  {
-    value:'11',
-    name:'红光11'
-  },
-  {
-    value:'12',
-    name:'红光12'
-  }
-]
-const renderOption = (obj:RenderDataSource<autoObj>)=>{
-  return <>
-     <h2>{obj.name}</h2>
-     <h2>{obj.value}</h2>
-   </> 
- }
  const PromiseFetchSuggestions =(query:string)=>{
    return fetch('https://api.github.com/search/users?q='+query)
    .then(response => response.json())

@@ -13,11 +13,20 @@ export type RenderDataSource <T = {}> =  T & RenderData
 
 
 export interface AutoCompleteProps extends Omit<InputProps,'onSelect'>{
+    /** 筛选方法 */
     fetchSuggestions:(query:string)=> RenderDataSource[] | Promise<RenderDataSource[]>
+    /** 选中后的回调 */
     onSelect?:(item:RenderDataSource)=> void
+    /** 自定义渲染样式 */
     renderOption?:(obj:RenderDataSource)=> ReactElement
 }
 
+/**
+   #### autoComplete自动填充使用方式
+    ~~~ js
+    import { AutoComplete } from 'hongguang-style'
+    ~~~
+*/
 export const AutoComplete:React.FC<AutoCompleteProps> =(props)=>{
     const { fetchSuggestions,onSelect,value ,className, renderOption,...restProps} = props
     const [suggestions,setSuggestions] = useState<RenderDataSource[]>([])
@@ -47,6 +56,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> =(props)=>{
             }
         }
         setheightIndex(-1)
+    // eslint-disable-next-line
     },[debounceValue])
 
     const renderItem = (value:RenderDataSource)=>{
@@ -105,20 +115,23 @@ export const AutoComplete:React.FC<AutoCompleteProps> =(props)=>{
             onChange={handleChange}
             onKeyDown={handleKey}
         />
-        {loading ? <ul> <Icon icon='spinner' spin/></ul> : null}
-        <ul>
-            {suggestions.length > 0 ? suggestions.map((item,index)=> {
-                const suggestionsSelect = classNames('suggestion-item',{
-                    'selected-item':heightIndex === index 
-                })
-                return  <li
-                key={index}
-                onClick={()=> handelSelect(item)}
-                className={suggestionsSelect}
-                >
-                    {renderItem(item)}
-               </li> 
-            }) : null}
-        </ul>
+       
+            {loading ?   
+                    <ul className='auto-complete-content'><Icon icon='spinner' spin/></ul>
+                    : 
+                    suggestions.length > 0 ?<ul className='auto-complete-content'> {suggestions.map((item,index)=> {
+                    const suggestionsSelect = classNames('suggestion-item',{
+                        'selected-item':heightIndex === index 
+                    })
+                    return  <li
+                    key={index}
+                    onClick={()=> handelSelect(item)}
+                    className={suggestionsSelect}
+                    >
+                        {renderItem(item)}
+                </li> 
+                })}</ul>
+                     : 
+                    null}
     </div>
 }

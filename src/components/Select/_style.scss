@@ -1,0 +1,62 @@
+.select{
+    width: 220px;
+    .select-content{
+        list-style: none;
+        border-radius: 20px;
+        height:100%;
+        width:100%;
+        padding:5px;
+        box-shadow: $auto-complete-box;
+        border-radius: 10px;
+        overflow: auto;
+        .select-option{
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            &:hover{
+                color:$menu-item-active-color;
+            }
+        }
+    }
+    .select-multiple{
+        position: absolute;
+        z-index: 99;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        list-style: none;
+        overflow: auto;
+        padding:10px;
+        .multiple-item {
+            color: $blue;
+            padding:3px;
+            border: 1px solid $blue; 
+            margin:0 2px;
+            border-radius: 2px;
+        }
+    }
+}
+.select-focus{
+    input{
+        background:  $input-focus-bg;
+        border-color: $input-focus-border-color;
+        border-width: $input-focus-width;
+        color: $input-focus-color;
+        box-shadow: $input-focus-shadow-color;
+    } 
+}
+.select .select-option.option-disabled{
+    color: $btn-link-disabled-color;
+    //鼠标事件拜拜
+    pointer-events: none;
+    &:hover{
+        color: $btn-link-disabled-color!important;
+    }
+}
+.select-disabled{
+    pointer-events: none;
+    input{
+        background-color: rgba(0,0,0,.2) !important;
+    }
+}

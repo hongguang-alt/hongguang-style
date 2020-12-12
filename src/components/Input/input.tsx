@@ -44,10 +44,10 @@ export const Input:React.FC<InputProps> = (props) => {
     return (
         <div className='input-content'>
             {prepand ? <div className='input-pre-app'>{prepand}</div> :null}
-            <span className='input-inner'>
+            <div className='input-inner'>
                 {icon ? <Icon className='input-icon' icon={icon}/> : null}
                 <input className={classes} disabled={disabled} {...restProps} onChange={onChange}/>
-            </span>
+            </div>
             {append ? <div className='input-pre-app'>{append}</div> :null}
         </div>
         

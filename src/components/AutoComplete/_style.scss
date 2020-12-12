@@ -2,3 +2,23 @@
     background-color: blue;
     color: white;
 }
+
+.auto-complete{
+    width:200px;
+    .auto-complete-content{ 
+        list-style: none;  
+        margin-top:5px;
+        height:100%;
+        width:100%;
+        padding:5px;
+        box-shadow: $auto-complete-box;
+        border-radius: 10px;
+        overflow: auto;
+        .suggestion-item{
+            cursor: pointer;
+            &:hover{
+                color:$menu-item-active-color;
+            }
+        }
+    }
+}
