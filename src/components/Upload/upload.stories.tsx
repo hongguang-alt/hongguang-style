@@ -26,13 +26,26 @@ const beforeUploadSize = (files:FileList)=>{
 export const Default = Template.bind({});
 Default.args = {
     action:'https://jsonplaceholder.typicode.com/posts',
+    multiple:true,
     onProgress:(pre)=>{
         // console.log(pre)
-    }
+    },
+    data:{
+        a:'123'
+    },
+    name:'hongguang'
 }
 
 export const LimitSize = Template.bind({})
+
 LimitSize.args = {
     action:'https://jsonplaceholder.typicode.com/posts',
     beforeUpload:beforeUploadSize
+}
+
+export const Drap = Template.bind({})
+Drap.args = {
+    action:'https://jsonplaceholder.typicode.com/posts',
+    multiple:true,
+    drag:true
 }

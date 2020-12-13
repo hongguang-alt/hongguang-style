@@ -8,6 +8,11 @@ library.add(fab,fas)
 //预览配置参数
 export const parameters = {
   actions: {
-    argTypesRegex: "^on[A-Z].*"
+    argTypesRegex: "^on[A-Z].*",
+  },
+  options: {
+    storySort: {
+      order: ['welcome', 'components'],
+    },
   },
 }

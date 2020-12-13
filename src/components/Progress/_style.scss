@@ -1,0 +1,19 @@
+.progress{
+    position: relative;
+    font-size: 13px;
+    .progress-content{
+        position: absolute;
+        left: 0;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding:0 5px;
+        border-radius: 2px;
+    }
+}
+
+@each $var,$glyph in $theme-colors {
+    .progress-#{$var}{
+        background-color: $glyph;
+    }
+}

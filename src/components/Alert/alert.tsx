@@ -42,7 +42,9 @@ export const Alert:React.FC<AlertProps> =(props)=>{
     const handleClick = () => {
         setClasses('alert-none')
         //表示非空
-        onClose!()
+        if(onClose){
+            onClose()
+        }
     }
     return <div className={classes} title={title}>
         <div className='alert-flex'>

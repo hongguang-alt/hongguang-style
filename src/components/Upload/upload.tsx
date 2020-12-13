@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Button } from '../Button/button'
 import axios from 'axios'
 import { UploadList } from './uploadList'
+import { UploadDrap } from './uploadDrap'
 
 export type UploadReady = 'ready' | 'uploading' | 'success' | 'error'
 export interface FileInfoProps {
@@ -26,23 +27,39 @@ export interface UploadProps  {
     onChange?:(file:File)=>void
     /** 上传前的钩子函数 */
     beforeUpload?:(fileList:FileList)=>boolean | Promise<FileList>
+    /** 移出文件后的回调函数 */
+    onremove?:(file:FileInfoProps)=>void
+    /** 上传的文件名称 */
+    name?:string
+    /** 修改的头部信息 */
+    headers?:{[key:string]:any}
+    /** 是否携带cookie*/
+    withCredentials?:boolean
+    /** 支持的格式 */
+    accept?:string
+    /** 是否支持多选 */
+    multiple?:true
+    /** 要上传的数据 */
+    data?:{[key:string]:any}
+    /** 是否拖拽上传 */
+    drag?:boolean
 }
 
+/**
+ * ### Upload的使用方法
+ * ~~~js
+ * import { Upload } from 'hongguang-style'
+ * ~~~
+*/
 export const Upload:React.FC<UploadProps> = (props)=>{
-    const defaultfilesInfo:FileInfoProps[] = [
-        {name:"hongguang.txt",uid:Date.now+'upload',size:2345,precentage:10,status:'ready'},
-        {name:"a.txt",uid:Date.now+'upload',size:2345,precentage:10,status:'ready'},
-        {name:"b.txt",uid:Date.now+'upload',size:2345,precentage:10,status:'ready'}
-    ]
     const classes = classNames('upload')
     const componentRef = useRef<HTMLInputElement>(null)
-    const { action,onProgress,onSuccess,onError,onChange,beforeUpload } = props
-    const [filesInfo,setFilesInfo] = useState<FileInfoProps[]>(defaultfilesInfo || [])
+    const {data,drag, action,onProgress,onSuccess,onError,onChange,beforeUpload ,onremove,withCredentials,headers,name,multiple,accept} = props
+    const [filesInfo,setFilesInfo] = useState<FileInfoProps[]>([])
 
     //更新列表某个数据
     const updateFileInfo = (file:FileInfoProps,fileProps:Partial<FileInfoProps>)=>{
         setFilesInfo((_file)=>{
-            console.log(_file)
            return _file.map(item=>{
                 if(item.uid === file.uid){
                     return { ...item,...fileProps }
@@ -85,6 +102,7 @@ export const Upload:React.FC<UploadProps> = (props)=>{
 
     const post = (fileList:FileList)=>{
         let files = Array.from(fileList)
+        if(!multiple) files = [files[0]]
         files.forEach(item=>{
             let format = new FormData()
             let fileInfo:FileInfoProps = {
@@ -94,17 +112,28 @@ export const Upload:React.FC<UploadProps> = (props)=>{
                 size:item.size,
                 status:'ready'
             }
-            //初始化数据
-            setFilesInfo([...filesInfo, fileInfo])
-            format.append(item.name,item)
+            //初始化数据,防止异步
+            setFilesInfo((filesInfo)=>{
+                return [...filesInfo, fileInfo]
+            })
+            format.append(name || 'file',item)
+            if(data){
+                Object.keys(data).forEach(it=>{
+                    format.append(it,data[it])
+                })
+            }
             axios.post(action,format,{
                 onUploadProgress: progressEvent => {
                     let complete = (progressEvent.loaded / progressEvent.total * 100 | 0)
                     //更新数据
-                    updateFileInfo(fileInfo,{ precentage:complete })
+                    updateFileInfo(fileInfo,{ precentage:complete,status:'uploading' })
                     if(onProgress){
                         onProgress(complete,item)
                     }
+                  },
+                  withCredentials,
+                  headers:{
+                      ...headers,
                   }
             })
                 .then(res=>{
@@ -129,16 +158,42 @@ export const Upload:React.FC<UploadProps> = (props)=>{
 
     }
 
+
+    const onmove = (index:number)=>{
+        if(onremove){
+            onremove(filesInfo[index])
+        }
+        let newFiles = [...filesInfo]
+        newFiles.splice(index,1)
+        setFilesInfo(newFiles)
+    }
+
+
     return <div className={classes}>
-        <Button btnType='primary' onClick={handleClick}>文件上传</Button>
+        { drag ? 
+        <div onClick={handleClick}> 
+            <UploadDrap 
+                post={post}
+            />
+        </div> 
+        : 
+            <Button btnType='primary' onClick={handleClick}>文件上传</Button>
+        }
         <input 
             type='file'
             style={{display:"none"}}
             ref={componentRef}
             onChange={handleChange}
+            multiple={multiple}
+            accept={accept}
         />
         <UploadList 
             filesInfo={filesInfo}
+            remove={onmove}
         />
     </div>
+}
+
+Upload.defaultProps={
+    withCredentials:false,
 }

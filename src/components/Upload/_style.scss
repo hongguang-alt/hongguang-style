@@ -1,4 +1,50 @@
 //uploadList
 .upload-list{
     list-style: none;
+    padding:5px;
+}
+.upload-list-base{
+    cursor: pointer;
+    &:hover{
+        .close-list{
+            display: inline-block!important;
+        }
+        .open-list{
+            display: none;
+        }
+    }
+}
+.upload-list-error{
+    color:$red;
+}
+.upload-list-success{
+    color:$green;
+}
+.upload-list-uploading{
+    color:$blue;
+}
+.upload-item{
+    &:hover{
+        background-color: rgba(0,0,0,.1);
+    }
+}
+.upload-drap {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 5px;
+    border:1px dashed rgba(0,0,0,.2);
+    cursor: pointer;
+    &:hover{
+        background-color: rgba(0,0,0,.2);
+        border:1px dashed $blue;
+    }
+}
+.upload-drap.drap{
+    background-color: rgba(0,0,0,.2);
+    border:1px dashed $blue;
 }
