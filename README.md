@@ -20,4 +20,3 @@ import "hongguang-style/build/index.css";
 import { Button } from "hongguang-style";
 ```
 
-相关链接：[文档](http://hongguang.club:4000)
